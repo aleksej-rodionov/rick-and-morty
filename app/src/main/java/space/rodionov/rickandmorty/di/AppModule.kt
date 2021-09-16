@@ -7,11 +7,13 @@ import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
 import space.rodionov.rickandmorty.common.Constants
 import space.rodionov.rickandmorty.data.remote.RickAndMortyApi
 import space.rodionov.rickandmorty.data.repository.RamRepositoryImpl
+import space.rodionov.rickandmorty.domain.repository.RamRepository
 import javax.inject.Singleton
 
 @Module
@@ -35,6 +37,7 @@ object AppModule {
     fun provideRickAndMortyApi(okHttpClient: OkHttpClient): RickAndMortyApi =
         Retrofit.Builder()
             .baseUrl(Constants.BASE_URL)
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
             .client(okHttpClient)
             .build()
@@ -42,7 +45,9 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideRamRepository(api: RickAndMortyApi) = RamRepositoryImpl(api)
+    fun provideRamRepository(api: RickAndMortyApi): RamRepository {
+        return RamRepositoryImpl(api)
+    }
 }
 
 

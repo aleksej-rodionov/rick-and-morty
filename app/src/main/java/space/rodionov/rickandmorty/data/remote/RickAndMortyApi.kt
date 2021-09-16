@@ -11,6 +11,9 @@ import space.rodionov.rickandmorty.data.remote.dto.LocationDto
 interface RickAndMortyApi {
 
     @GET("/character")
+    fun getCharactersTest(): CharactersResponse
+
+    @GET("/api/character")
     fun getCharacters(): Single<CharactersResponse>
 
     @GET("/character/{charId}")
