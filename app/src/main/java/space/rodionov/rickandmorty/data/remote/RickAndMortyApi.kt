@@ -1,5 +1,7 @@
 package space.rodionov.rickandmorty.data.remote
 
+import io.reactivex.Flowable
+import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Path
 import space.rodionov.rickandmorty.data.remote.dto.CharacterDto
@@ -9,28 +11,28 @@ import space.rodionov.rickandmorty.data.remote.dto.LocationDto
 interface RickAndMortyApi {
 
     @GET("/character")
-    suspend fun getCharacters(): CharactersResponse
+    fun getCharacters(): Single<CharactersResponse>
 
     @GET("/character/{charId}")
-    suspend fun getCharacterById(
+    fun getCharacterById(
         @Path("charId") charId: Int
-    ): CharacterDto
+    ): Single<CharacterDto>
 
     @GET("/location")
-    suspend fun getLocations(): LocationsResponse
+    fun getLocations(): Single<LocationsResponse>
 
     @GET("/location/{locId}")
-    suspend fun getLocationById(
+    fun getLocationById(
         @Path("locId") locId: Int
-    ): LocationDto
+    ): Single<LocationDto>
 
     @GET("/episode")
-    suspend fun getEpisodes() : EpisodesResponse
+    fun getEpisodes(): Single<EpisodesResponse>
 
     @GET("/episode/{epiId}")
-    suspend fun getEpisodeById(
+    fun getEpisodeById(
         @Path("epiId") epiId: Int
-    ) : EpisodeDto
+    ): Single<EpisodeDto>
 
 }
 

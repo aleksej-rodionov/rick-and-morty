@@ -1,5 +1,7 @@
 package space.rodionov.rickandmorty.data.remote.dto
 
+import space.rodionov.rickandmorty.domain.model.Character
+
 data class CharacterDto(
     val created: String,
     val episode: List<String>,
@@ -13,4 +15,14 @@ data class CharacterDto(
     val status: String,
     val type: String,
     val url: String
+)
+
+fun CharacterDto.toCharacter() = Character(
+gender = gender,
+    id = id,
+    image = image,
+    location = location,
+    name = name,
+    species = species,
+    status = status
 )

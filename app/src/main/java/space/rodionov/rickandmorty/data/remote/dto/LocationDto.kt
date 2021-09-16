@@ -1,5 +1,7 @@
 package space.rodionov.rickandmorty.data.remote.dto
 
+import space.rodionov.rickandmorty.domain.model.Location
+
 data class LocationDto(
     val created: String,
     val dimension: String,
@@ -8,4 +10,11 @@ data class LocationDto(
     val residents: List<String>,
     val type: String,
     val url: String
+)
+
+fun LocationDto.toLocation() = Location(
+    dimension = dimension,
+    id = id,
+    name = name,
+    type = type
 )
