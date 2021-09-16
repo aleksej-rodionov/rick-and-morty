@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">RickAndMorty</string>
+    <string name="retry">Retry</string>
+    <string name="an_error_occured">An error occured</string>
+    <string name="episodes">Episodes</string>
+    <string name="locations">Locations</string>
+    <string name="home">Characters</string>
 </resources>
