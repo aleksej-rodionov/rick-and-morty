@@ -10,5 +10,7 @@
     <string name="location">Location: %1$s</string>
     <string name="location_type">Type: %1$s</string>
     <string name="location_dimension">Dimension: %1$s</string>
+    <string name="episode_air_date">Air date: %1$s</string>
+    <string name="episode_episode">Episode: %1$s</string>
     <string name="character_image">Character image</string>
 </resources>

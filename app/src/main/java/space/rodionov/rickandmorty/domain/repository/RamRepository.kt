@@ -9,9 +9,6 @@ import space.rodionov.rickandmorty.data.remote.LocationsResponse
 import space.rodionov.rickandmorty.data.remote.dto.CharacterDto
 import space.rodionov.rickandmorty.data.remote.dto.EpisodeDto
 import space.rodionov.rickandmorty.data.remote.dto.LocationDto
-import space.rodionov.rickandmorty.domain.model.Character
-import space.rodionov.rickandmorty.domain.model.Episode
-import space.rodionov.rickandmorty.domain.model.Location
 
 interface RamRepository {
 

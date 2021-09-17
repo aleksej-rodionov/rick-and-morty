@@ -27,7 +27,11 @@
         android:id="@+id/episodesFragment"
         android:name="space.rodionov.rickandmorty.presentation.episode.episodelist.EpisodesFragment"
         android:label="fragment_episodes"
-        tools:layout="@layout/fragment_episodes" />
+        tools:layout="@layout/fragment_episodes" >
+        <action
+            android:id="@+id/action_episodesFragment_to_episodeDetailFragment"
+            app:destination="@id/episodeDetailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/characterDetailFragment"
         android:name="space.rodionov.rickandmorty.presentation.character.characterdetail.CharacterDetailFragment"
@@ -44,6 +48,15 @@
         tools:layout="@layout/fragment_location_detail" >
         <argument
             android:name="locId"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/episodeDetailFragment"
+        android:name="space.rodionov.rickandmorty.presentation.episode.episodedetail.EpisodeDetailFragment"
+        android:label="fragment_episode_detail"
+        tools:layout="@layout/fragment_episode_detail" >
+        <argument
+            android:name="epiId"
             app:argType="integer" />
     </fragment>
 </navigation>
