@@ -10,9 +10,9 @@ import space.rodionov.rickandmorty.R
 import space.rodionov.rickandmorty.databinding.ItemCharacterBinding
 import space.rodionov.rickandmorty.domain.model.Character
 
-class CharactersAdapter(
+class CharacterAdapter(
     private val onCharacterClick: (Character) -> Unit
-) : ListAdapter<Character, CharactersAdapter.CharacterViewHolder>(CharacterComparator()) {
+) : ListAdapter<Character, CharacterAdapter.CharacterViewHolder>(CharacterComparator()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CharacterViewHolder {
         val binding =

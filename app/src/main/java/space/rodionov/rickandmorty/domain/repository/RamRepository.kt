@@ -17,12 +17,12 @@ interface RamRepository {
 
      fun getCharactersTest(): CharactersResponse
 
-     fun getCharacters(): Single<CharactersResponse>
+     fun getCharacters(page: Int): Single<CharactersResponse>
      fun getCharacterById(charId: Int) : Single<CharacterDto>
 
-     fun getLocations(): Single<LocationsResponse>
+     fun getLocations(page: Int): Single<LocationsResponse>
      fun getLocationById(locId: Int) : Single<LocationDto>
 
-     fun getEpisodes(): Single<EpisodesResponse>
+     fun getEpisodes(page: Int): Single<EpisodesResponse>
      fun getEpisodeById(epiId: Int) : Single<EpisodeDto>
 }

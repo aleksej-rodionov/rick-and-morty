@@ -5,4 +5,8 @@
     <string name="episodes">Episodes</string>
     <string name="locations">Locations</string>
     <string name="home">Characters</string>
+    <string name="species">Species: %1$s</string>
+    <string name="gender">Gender: %1$s</string>
+    <string name="location">Location: %1$s</string>
+    <string name="character_image">Character image</string>
 </resources>
