@@ -65,7 +65,6 @@ class CharactersViewModel @Inject constructor(
                     }
                 }
             })
-        Log.d(TAG, "characters.value = ${characters.value?.size}")
     }
 
     fun onRefresh() {

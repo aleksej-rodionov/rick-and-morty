@@ -64,12 +64,10 @@ class CharacterAdapter(
     }
 
     class CharacterComparator : DiffUtil.ItemCallback<Character>() {
-
         override fun areItemsTheSame(oldItem: Character, newItem: Character) =
             oldItem.id == newItem.id
 
         override fun areContentsTheSame(oldItem: Character, newItem: Character) =
             oldItem == newItem
-
     }
 }

@@ -8,5 +8,7 @@
     <string name="species">Species: %1$s</string>
     <string name="gender">Gender: %1$s</string>
     <string name="location">Location: %1$s</string>
+    <string name="location_type">Type: %1$s</string>
+    <string name="location_dimension">Dimension: %1$s</string>
     <string name="character_image">Character image</string>
 </resources>

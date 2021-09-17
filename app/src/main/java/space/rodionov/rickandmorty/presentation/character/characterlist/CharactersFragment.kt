@@ -47,15 +47,15 @@ class CharactersFragment : Fragment(R.layout.fragment_characters) {
             }
 
             viewModel.characters.observe(viewLifecycleOwner) {
-                Log.d(TAG, "characters.size = ${it.size}")
-                Log.d(TAG, "newpage = ${viewModel.nextPage}")
+
                 charactersAdapter.submitList(it)
                 charactersAdapter.notifyDataSetChanged()
                 progressBar.visibility = View.INVISIBLE
             }
 
             nestedScrollView.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
-                if (scrollY == v.getChildAt(0).measuredHeight - v.measuredHeight) {
+                if (scrollY == v.getChildAt(0).measuredHeight
+                    - v.measuredHeight) {
                     if (viewModel.nextPage < 34) {
                         progressBar.visibility = View.VISIBLE
                         viewModel.nextPage++
@@ -75,7 +75,6 @@ class CharactersFragment : Fragment(R.layout.fragment_characters) {
         val action = CharactersFragmentDirections.actionCharactersFragmentToCharacterDetailFragment(
             character.id
         )
-        Log.d(TAG, "Chosen ID = ${character.id}")
         findNavController().navigate(action)
     }
 
