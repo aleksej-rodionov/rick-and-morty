@@ -23,7 +23,7 @@ class EpisodeDetailFragment: Fragment(R.layout.fragment_episode_detail) {
             viewModel.episode.observe(viewLifecycleOwner) {
                 tvName.text = it.name
                 tvAirDate.text = getString(R.string.episode_air_date, it.airDate)
-                tvEpisode.text = getString(R.string.episode_episode, it.episode)
+                tvEpisode.text = getString(R.string.episode_episode, it.episode )
             }
         }
     }

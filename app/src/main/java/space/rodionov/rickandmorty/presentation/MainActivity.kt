@@ -19,6 +19,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setTheme(R.style.Theme_RickAndMorty)
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
@@ -27,8 +28,6 @@ class MainActivity : AppCompatActivity() {
         navController = navHostFragment.findNavController()
         binding.bottomNav.setupWithNavController(navController)
 
-        setSupportActionBar(binding.toolbar)
-        setupActionBarWithNavController(navController)
     }
 
     override fun onSupportNavigateUp(): Boolean { // че эт

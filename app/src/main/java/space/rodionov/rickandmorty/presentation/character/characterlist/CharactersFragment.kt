@@ -29,6 +29,7 @@ class CharactersFragment : Fragment(R.layout.fragment_characters) {
         _binding = FragmentCharactersBinding.bind(view)
 
         val charactersAdapter = CharacterAdapter(
+            requireContext(),
             onCharacterClick = {
                 onCharacterClick(it)
             }

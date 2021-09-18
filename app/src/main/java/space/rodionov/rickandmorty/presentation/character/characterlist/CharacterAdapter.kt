@@ -1,5 +1,6 @@
 package space.rodionov.rickandmorty.presentation.character.characterlist
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -11,6 +12,7 @@ import space.rodionov.rickandmorty.databinding.ItemCharacterBinding
 import space.rodionov.rickandmorty.domain.model.Character
 
 class CharacterAdapter(
+    private val context: Context,
     private val onCharacterClick: (Character) -> Unit
 ) : ListAdapter<Character, CharacterAdapter.CharacterViewHolder>(CharacterComparator()) {
 
@@ -46,9 +48,8 @@ class CharacterAdapter(
                     .into(image)
 
                 tvName.text = character.name
-                tvSpecies.text = character.species
-                tvGender.text = character.gender
-                tvLocation.text = character.location.name
+                tvSpeciesAndGender.text = context.getString(R.string.species_and_gender, character.species, character.gender)
+                tvLocation.text = context.getString(R.string.location, character.location.name)
                 tvStatus.text = character.status
             }
         }

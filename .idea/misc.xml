@@ -3,17 +3,20 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/HomoSapiens/AppData/Local/GitHubDesktop/app-2.8.3/rick-and-morty/app/src/main/res/drawable/ic_logo.xml" value="0.19583333333333333" />
+        <entry key="..\:/Users/HomoSapiens/AppData/Local/GitHubDesktop/app-2.8.3/rick-and-morty/app/src/main/res/drawable/splash_screen.xml" value="0.19583333333333333" />
         <entry key="..\:/Users/HomoSapiens/AppData/Local/GitHubDesktop/app-2.8.3/rick-and-morty/app/src/main/res/layout/activity_main.xml" value="0.1796875" />
         <entry key="..\:/Users/HomoSapiens/AppData/Local/GitHubDesktop/app-2.8.3/rick-and-morty/app/src/main/res/layout/fragment_character_detail.xml" value="0.22" />
         <entry key="..\:/Users/HomoSapiens/AppData/Local/GitHubDesktop/app-2.8.3/rick-and-morty/app/src/main/res/layout/fragment_characters.xml" value="0.1796875" />
         <entry key="..\:/Users/HomoSapiens/AppData/Local/GitHubDesktop/app-2.8.3/rick-and-morty/app/src/main/res/layout/fragment_episode.xml" value="0.1796875" />
+        <entry key="..\:/Users/HomoSapiens/AppData/Local/GitHubDesktop/app-2.8.3/rick-and-morty/app/src/main/res/layout/fragment_episode_detail.xml" value="0.1796875" />
         <entry key="..\:/Users/HomoSapiens/AppData/Local/GitHubDesktop/app-2.8.3/rick-and-morty/app/src/main/res/layout/fragment_episodes.xml" value="0.1" />
         <entry key="..\:/Users/HomoSapiens/AppData/Local/GitHubDesktop/app-2.8.3/rick-and-morty/app/src/main/res/layout/fragment_location.xml" value="0.1796875" />
         <entry key="..\:/Users/HomoSapiens/AppData/Local/GitHubDesktop/app-2.8.3/rick-and-morty/app/src/main/res/layout/fragment_location_detail.xml" value="0.1796875" />
         <entry key="..\:/Users/HomoSapiens/AppData/Local/GitHubDesktop/app-2.8.3/rick-and-morty/app/src/main/res/layout/fragment_locations.xml" value="0.1" />
         <entry key="..\:/Users/HomoSapiens/AppData/Local/GitHubDesktop/app-2.8.3/rick-and-morty/app/src/main/res/layout/item_character.xml" value="0.1796875" />
         <entry key="..\:/Users/HomoSapiens/AppData/Local/GitHubDesktop/app-2.8.3/rick-and-morty/app/src/main/res/layout/item_episode.xml" value="0.1796875" />
-        <entry key="..\:/Users/HomoSapiens/AppData/Local/GitHubDesktop/app-2.8.3/rick-and-morty/app/src/main/res/layout/item_location.xml" value="0.1796875" />
+        <entry key="..\:/Users/HomoSapiens/AppData/Local/GitHubDesktop/app-2.8.3/rick-and-morty/app/src/main/res/layout/item_location.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/HomoSapiens/AppData/Local/GitHubDesktop/app-2.8.3/rick-and-morty/app/src/main/res/menu/menu_bottom_nav.xml" value="0.1796875" />
       </map>
     </option>
