@@ -3,7 +3,7 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'androidx.navigation.safeargs.kotlin'
-    id 'dagger.hilt.android.plugin' // DELETE!!
+    id 'dagger.hilt.android.plugin'
 
 }
 
@@ -87,7 +87,7 @@ dependencies {
     implementation "com.squareup.okhttp3:okhttp:5.0.0-alpha.2"
     implementation "com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.2"
 
-    // Dagger Hilt DELETE!!
+    // Dagger Hilt 
     implementation "com.google.dagger:hilt-android:2.38.1"
     kapt "com.google.dagger:hilt-android-compiler:2.38.1"
     implementation "androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03"
