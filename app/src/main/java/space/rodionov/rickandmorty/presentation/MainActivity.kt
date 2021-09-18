@@ -28,6 +28,8 @@ class MainActivity : AppCompatActivity() {
         navController = navHostFragment.findNavController()
         binding.bottomNav.setupWithNavController(navController)
 
+        setSupportActionBar(binding.toolbar)
+        setupActionBarWithNavController(navController)
     }
 
     override fun onSupportNavigateUp(): Boolean { // че эт
