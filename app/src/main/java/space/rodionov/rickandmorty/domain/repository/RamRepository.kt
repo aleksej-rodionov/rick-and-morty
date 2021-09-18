@@ -1,7 +1,5 @@
 package space.rodionov.rickandmorty.domain.repository
 
-import androidx.lifecycle.LiveData
-import io.reactivex.Flowable
 import io.reactivex.Single
 import space.rodionov.rickandmorty.data.remote.CharactersResponse
 import space.rodionov.rickandmorty.data.remote.EpisodesResponse
@@ -11,8 +9,6 @@ import space.rodionov.rickandmorty.data.remote.dto.EpisodeDto
 import space.rodionov.rickandmorty.data.remote.dto.LocationDto
 
 interface RamRepository {
-
-     fun getCharactersTest(): CharactersResponse
 
      fun getCharacters(page: Int): Single<CharactersResponse>
      fun getCharacterById(charId: Int) : Single<CharacterDto>

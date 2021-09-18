@@ -1,6 +1,5 @@
 package space.rodionov.rickandmorty.data.remote
 
-import io.reactivex.Flowable
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -10,9 +9,6 @@ import space.rodionov.rickandmorty.data.remote.dto.EpisodeDto
 import space.rodionov.rickandmorty.data.remote.dto.LocationDto
 
 interface RickAndMortyApi {
-
-    @GET("/character/")
-    fun getCharactersTest(): CharactersResponse
 
     @GET("/api/character")
     fun getCharacters(

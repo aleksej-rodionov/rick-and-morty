@@ -15,9 +15,6 @@ import javax.inject.Inject
 class RamRepositoryImpl @Inject constructor(
     private val api: RickAndMortyApi
 ) : RamRepository {
-    override fun getCharactersTest(): CharactersResponse {
-        return api.getCharactersTest()
-    }
 
     override fun getCharacters(page: Int): Single<CharactersResponse> {
         return api.getCharacters(page)
