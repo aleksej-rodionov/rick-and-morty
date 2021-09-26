@@ -1,10 +1,7 @@
 package space.rodionov.rickandmorty.presentation.character.characterlist
 
 import android.util.Log
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.SingleObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -41,6 +38,20 @@ class CharactersViewModel @Inject constructor(
         onRefresh()
     }
 
+    fun onRefresh(/*owner: LifecycleOwner*/) {
+        fullList.clear()
+        characters.value = fullList
+        nextPage = 1
+        getNewPage(/*owner*/)
+    }
+
+//    fun getNewPage(owner: LifecycleOwner) {
+//        getCharactersUseCase.invoke(nextPage).observe(owner) {
+//            fullList.addAll(it)
+//            characters.value = fullList
+//        }
+//    }
+
     fun getNewPage() {
         val output = getCharactersUseCase.invoke(nextPage)
         output.subscribeOn(Schedulers.io())
@@ -65,13 +76,6 @@ class CharactersViewModel @Inject constructor(
                     }
                 }
             })
-    }
-
-    fun onRefresh() {
-        fullList.clear()
-        characters.value = fullList
-        nextPage = 1
-        getNewPage()
     }
 }
 

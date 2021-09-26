@@ -61,13 +61,13 @@ class CharactersFragment : Fragment(R.layout.fragment_characters) {
                     if (viewModel.nextPage < 34) {
                         progressBar.visibility = View.VISIBLE
                         viewModel.nextPage++
-                        viewModel.getNewPage()
+                        viewModel.getNewPage(/*viewLifecycleOwner*/)
                     }
                 }
             })
 
             swipeRefreshLayout.setOnRefreshListener {
-                viewModel.onRefresh()
+                viewModel.onRefresh(/*viewLifecycleOwner*/)
                 swipeRefreshLayout.isRefreshing = false
             }
         }
