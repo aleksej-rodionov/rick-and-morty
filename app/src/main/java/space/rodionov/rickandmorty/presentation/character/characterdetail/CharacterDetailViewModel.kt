@@ -1,10 +1,14 @@
 package space.rodionov.rickandmorty.presentation.character.characterdetail
 
 import android.util.Log
+import androidx.lifecycle.AbstractSavedStateViewModelFactory
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import dagger.hilt.android.lifecycle.HiltViewModel
+import androidx.savedstate.SavedStateRegistryOwner
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import io.reactivex.SingleObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -19,10 +23,25 @@ import javax.inject.Inject
 
 private const val TAG = "LOGS"
 
-@HiltViewModel
+class CharacterDetailViewModelFactory @AssistedInject constructor(
+    private val getCharacterUseCase: GetCharacterUseCase,
+    @Assisted owner: SavedStateRegistryOwner
+) : AbstractSavedStateViewModelFactory(owner, null) {
+    override fun <T : ViewModel?> create(
+        key: String,
+        modelClass: Class<T>,
+        handle: SavedStateHandle
+    ): T = CharacterDetailViewModel(getCharacterUseCase, handle) as T
+}
+
+@AssistedFactory
+interface CharacterDetailViewModelAssistedFactory {
+    fun create(owner: SavedStateRegistryOwner) : CharacterDetailViewModelFactory
+}
+
 class CharacterDetailViewModel @Inject constructor(
     private val getCharacterUseCase: GetCharacterUseCase,
-    private val state: SavedStateHandle
+    private val handle: SavedStateHandle
 ) : ViewModel() {
 
     private val composite = CompositeDisposable()
@@ -31,7 +50,7 @@ class CharacterDetailViewModel @Inject constructor(
     val character = MutableLiveData<Character>()
 
     init {
-        state.get<Int>("charId")?.let {
+        handle.get<Int>("charId")?.let {
             getCharacter(it)
         }
     }

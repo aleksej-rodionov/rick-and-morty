@@ -2,13 +2,15 @@ package space.rodionov.rickandmorty.presentation.character.characterlist
 
 import android.util.Log
 import androidx.lifecycle.*
-import dagger.hilt.android.lifecycle.HiltViewModel
+import androidx.savedstate.SavedStateRegistryOwner
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import io.reactivex.SingleObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import kotlinx.coroutines.launch
 import space.rodionov.rickandmorty.data.remote.CharactersResponse
 import space.rodionov.rickandmorty.data.remote.dto.toCharacter
 import space.rodionov.rickandmorty.domain.model.Character
@@ -18,15 +20,30 @@ import javax.inject.Inject
 
 private const val TAG = "LOGS"
 
-@HiltViewModel
+class CharactersViewModelFactory @AssistedInject constructor(
+    private val getCharactersUseCase: GetCharactersUseCase,
+    @Assisted owner: SavedStateRegistryOwner
+) : AbstractSavedStateViewModelFactory(owner, null) {
+    override fun <T : ViewModel?> create(
+        key: String,
+        modelClass: Class<T>,
+        handle: SavedStateHandle
+    ): T = CharactersViewModel(getCharactersUseCase, handle) as T
+}
+
+@AssistedFactory
+interface CharactersViewModelAssistedFactory {
+    fun create(owner: SavedStateRegistryOwner) : CharactersViewModelFactory
+}
+
 class CharactersViewModel @Inject constructor(
     private val getCharactersUseCase: GetCharactersUseCase,
-    private val state: SavedStateHandle
+    private val handle: SavedStateHandle
 ) : ViewModel() {
-    var nextPage = state.get<Int>("nextPage") ?: 1
+    var nextPage = handle.get<Int>("nextPage") ?: 1
         set(value) {
             field = value
-            state.set("nextPage", value)
+            handle.set("nextPage", value)
         }
 
     private val composite = CompositeDisposable()

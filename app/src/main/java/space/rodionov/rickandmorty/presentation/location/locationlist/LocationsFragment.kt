@@ -1,5 +1,6 @@
 package space.rodionov.rickandmorty.presentation.location.locationlist
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -9,17 +10,26 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import dagger.hilt.android.AndroidEntryPoint
 import space.rodionov.rickandmorty.R
 import space.rodionov.rickandmorty.databinding.FragmentLocationsBinding
 import space.rodionov.rickandmorty.domain.model.Location
+import space.rodionov.rickandmorty.presentation.MainActivity
+import javax.inject.Inject
 
 private const val TAG = "LOGS"
 
-@AndroidEntryPoint
 class LocationsFragment : Fragment(R.layout.fragment_locations) {
 
-    private val viewModel: LocationsViewModel by viewModels()
+//    private val viewModel: LocationsViewModel by viewModels()
+    @Inject
+    lateinit var assistedFactory: LocationsViewModelAssistedFactory
+    private val viewModel: LocationsViewModel by viewModels { assistedFactory.create(this) }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        (activity as MainActivity).appComponent.inject(this)
+    }
+
     private var _binding: FragmentLocationsBinding? = null
     private val binding get() = _binding!!
 

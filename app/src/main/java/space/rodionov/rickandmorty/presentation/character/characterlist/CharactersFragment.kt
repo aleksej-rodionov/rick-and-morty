@@ -1,5 +1,6 @@
 package space.rodionov.rickandmorty.presentation.character.characterlist
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -10,17 +11,28 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import dagger.hilt.android.AndroidEntryPoint
 import space.rodionov.rickandmorty.R
 import space.rodionov.rickandmorty.databinding.FragmentCharactersBinding
 import space.rodionov.rickandmorty.domain.model.Character
+import space.rodionov.rickandmorty.presentation.MainActivity
+import javax.inject.Inject
 
 private const val TAG = "LOGS"
 
-@AndroidEntryPoint
 class CharactersFragment : Fragment(R.layout.fragment_characters) {
 
-    private val viewModel: CharactersViewModel by viewModels()
+    //    private val viewModel: CharactersViewModel by viewModels()
+//    private val viewModel by lazy {
+//        ViewModelProvider(this).get(CharactersViewModel::class.java)
+//    }
+    @Inject
+    lateinit var assistedFactory: CharactersViewModelAssistedFactory
+    private val viewModel: CharactersViewModel by viewModels { assistedFactory.create(this) }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        (activity as MainActivity).appComponent.inject(this)
+    }
 
     private var _binding: FragmentCharactersBinding? = null
     private val binding get() = _binding!!
@@ -57,7 +69,8 @@ class CharactersFragment : Fragment(R.layout.fragment_characters) {
 
             nestedScrollView.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
                 if (scrollY == v.getChildAt(0).measuredHeight
-                    - v.measuredHeight) {
+                    - v.measuredHeight
+                ) {
                     if (viewModel.nextPage < 34) {
                         progressBar.visibility = View.VISIBLE
                         viewModel.nextPage++

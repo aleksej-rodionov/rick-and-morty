@@ -1,5 +1,6 @@
 package space.rodionov.rickandmorty.presentation.episode.episodelist
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.core.widget.NestedScrollView
@@ -8,17 +9,25 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import dagger.hilt.android.AndroidEntryPoint
 import space.rodionov.rickandmorty.R
 import space.rodionov.rickandmorty.databinding.FragmentEpisodesBinding
 import space.rodionov.rickandmorty.domain.model.Episode
+import space.rodionov.rickandmorty.presentation.MainActivity
+import javax.inject.Inject
 
-@AndroidEntryPoint
 class EpisodesFragment : Fragment(R.layout.fragment_episodes) {
+//    private val viewModel: EpisodesViewModel by viewModels()
+    @Inject
+    lateinit var assistedFactory: EpisodesViewModelAssistedFactory
+    private val viewModel : EpisodesViewModel by viewModels { assistedFactory.create(this) }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        (activity as MainActivity).appComponent.inject(this)
+    }
 
     private var _binding: FragmentEpisodesBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: EpisodesViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

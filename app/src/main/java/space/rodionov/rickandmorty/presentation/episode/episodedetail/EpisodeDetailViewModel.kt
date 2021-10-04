@@ -1,10 +1,14 @@
 package space.rodionov.rickandmorty.presentation.episode.episodedetail
 
 import android.util.Log
+import androidx.lifecycle.AbstractSavedStateViewModelFactory
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import dagger.hilt.android.lifecycle.HiltViewModel
+import androidx.savedstate.SavedStateRegistryOwner
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import io.reactivex.SingleObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -19,7 +23,24 @@ import javax.inject.Inject
 
 private const val TAG = "LOGS"
 
-@HiltViewModel
+class EpisodeDetailViewModelFactory @AssistedInject constructor(
+    private val getEpisodeUseCase: GetEpisodeUseCase,
+    @Assisted owner: SavedStateRegistryOwner
+) : AbstractSavedStateViewModelFactory(owner, null) {
+    override fun <T : ViewModel?> create(
+        key: String,
+        modelClass: Class<T>,
+        handle: SavedStateHandle
+    ): T {
+        return EpisodeDetailViewModel(getEpisodeUseCase, handle) as T
+    }
+}
+
+@AssistedFactory
+interface EpisodeDetailViewModelAssistedFactory {
+    fun create(owner: SavedStateRegistryOwner) : EpisodeDetailViewModelFactory
+}
+
 class EpisodeDetailViewModel @Inject constructor(
     private val getEpisodeUseCase: GetEpisodeUseCase,
     private val state: SavedStateHandle

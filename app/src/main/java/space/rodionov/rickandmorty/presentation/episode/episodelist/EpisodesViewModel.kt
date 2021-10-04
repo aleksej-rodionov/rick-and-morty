@@ -1,10 +1,14 @@
 package space.rodionov.rickandmorty.presentation.episode.episodelist
 
 import android.util.Log
+import androidx.lifecycle.AbstractSavedStateViewModelFactory
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import dagger.hilt.android.lifecycle.HiltViewModel
+import androidx.savedstate.SavedStateRegistryOwner
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedFactory
+import dagger.assisted.AssistedInject
 import io.reactivex.SingleObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -19,15 +23,32 @@ import javax.inject.Inject
 
 private const val TAG = "LOGS"
 
-@HiltViewModel
+class EpisodesViewModelFactory @AssistedInject constructor(
+    private val getEpisodesUseCase: GetEpisodesUseCase,
+    @Assisted owner: SavedStateRegistryOwner
+) : AbstractSavedStateViewModelFactory(owner, null) {
+    override fun <T : ViewModel?> create(
+        key: String,
+        modelClass: Class<T>,
+        handle: SavedStateHandle
+    ): T {
+        return EpisodesViewModel(getEpisodesUseCase, handle) as T
+    }
+}
+
+@AssistedFactory
+interface EpisodesViewModelAssistedFactory {
+    fun create(owner: SavedStateRegistryOwner): EpisodesViewModelFactory
+}
+
 class EpisodesViewModel @Inject constructor(
     private val getEpisodesUseCase: GetEpisodesUseCase,
-    private val state: SavedStateHandle
+    private val handle: SavedStateHandle
 ): ViewModel() {
-    var nextPage = state.get<Int>("nextPage") ?: 1
+    var nextPage = handle.get<Int>("nextPage") ?: 1
         set(value) {
             field = value
-            state.set("nextPage", value)
+            handle.set("nextPage", value)
         }
 
     private val composite = CompositeDisposable()

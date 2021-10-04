@@ -2,14 +2,11 @@ package space.rodionov.rickandmorty.di
 
 import dagger.Module
 import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.create
 import space.rodionov.rickandmorty.common.Constants
 import space.rodionov.rickandmorty.data.remote.RickAndMortyApi
 import space.rodionov.rickandmorty.data.repository.RamRepositoryImpl
@@ -17,8 +14,7 @@ import space.rodionov.rickandmorty.domain.repository.RamRepository
 import javax.inject.Singleton
 
 @Module
-@InstallIn(SingletonComponent::class)
-object AppModule {
+class AppModule {
 
     @Provides
     @Singleton
@@ -49,8 +45,3 @@ object AppModule {
         return RamRepositoryImpl(api)
     }
 }
-
-
-
-
-

@@ -1,20 +1,30 @@
 package space.rodionov.rickandmorty.presentation.character.characterdetail
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
-import dagger.hilt.android.AndroidEntryPoint
 import space.rodionov.rickandmorty.R
 import space.rodionov.rickandmorty.databinding.FragmentCharacterDetailBinding
+import space.rodionov.rickandmorty.presentation.MainActivity
+import javax.inject.Inject
 
-@AndroidEntryPoint
 class CharacterDetailFragment : Fragment(R.layout.fragment_character_detail) {
+
+//    private val viewModel: CharacterDetailViewModel by viewModels()
+    @Inject
+    lateinit var assistedFactory: CharacterDetailViewModelAssistedFactory
+    private val viewModel : CharacterDetailViewModel by viewModels { assistedFactory.create(this) }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        (activity as MainActivity).appComponent.inject(this)
+    }
 
     private var _binding: FragmentCharacterDetailBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: CharacterDetailViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
