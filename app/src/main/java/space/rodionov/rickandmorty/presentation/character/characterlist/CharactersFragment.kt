@@ -3,28 +3,28 @@ package space.rodionov.rickandmorty.presentation.character.characterlist
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import space.rodionov.rickandmorty.R
-import space.rodionov.rickandmorty.data.storage.SharedPrefStorageImpl
 import space.rodionov.rickandmorty.databinding.FragmentCharactersBinding
 import space.rodionov.rickandmorty.domain.model.Character
 import space.rodionov.rickandmorty.presentation.MainActivity
 import javax.inject.Inject
 
-private const val TAG = "LOGS"
+private const val TAG = "FRAGMENT LOGS"
 
 class CharactersFragment : Fragment(R.layout.fragment_characters) {
 
-    @Inject
-    lateinit var storage: SharedPrefStorageImpl
+//    @Inject
+//    lateinit var storage: SharedPrefStorageImpl
 
     //    private val viewModel: CharactersViewModel by viewModels()
 //    private val viewModel by lazy {
@@ -32,7 +32,7 @@ class CharactersFragment : Fragment(R.layout.fragment_characters) {
 //    }
     @Inject
     lateinit var assistedFactory: CharactersViewModelAssistedFactory
-    private val viewModel: CharactersViewModel by viewModels { assistedFactory.create(this) }
+    private val viewModel: CharactersViewModel by viewModels { assistedFactory.create(this/*, storage*/) }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -45,6 +45,12 @@ class CharactersFragment : Fragment(R.layout.fragment_characters) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentCharactersBinding.bind(view)
+
+        viewModel.setSSHMode(viewModel.getMode())
+
+        viewModel.isNight.observe(viewLifecycleOwner) {
+            Log.d(TAG, "onViewCreated: mode = $it")
+        }
 
         val charactersAdapter = CharacterAdapter(
             requireContext(),
@@ -89,6 +95,8 @@ class CharactersFragment : Fragment(R.layout.fragment_characters) {
                 swipeRefreshLayout.isRefreshing = false
             }
         }
+
+        setHasOptionsMenu(true)
     }
 
     private fun onCharacterClick(character: Character) {
@@ -101,5 +109,22 @@ class CharactersFragment : Fragment(R.layout.fragment_characters) {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_settings, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_switch_mode -> {
+                val night = viewModel.isNight.value ?: false
+                viewModel.saveMode(!night)
+                viewModel.setSSHMode(viewModel.getMode())
+
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 }

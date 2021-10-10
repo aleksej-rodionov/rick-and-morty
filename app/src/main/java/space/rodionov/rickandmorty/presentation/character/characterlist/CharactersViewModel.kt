@@ -11,6 +11,9 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import space.rodionov.rickandmorty.data.remote.CharactersResponse
 import space.rodionov.rickandmorty.data.remote.dto.toCharacter
 import space.rodionov.rickandmorty.data.storage.SharedPrefStorage
@@ -20,26 +23,28 @@ import space.rodionov.rickandmorty.domain.use_case.GetCharactersUseCase
 import java.io.IOException
 import javax.inject.Inject
 
-private const val TAG = "LOGS"
+private const val TAG = "VM LOGS"
 
 class CharactersViewModelFactory @AssistedInject constructor(
     private val getCharactersUseCase: GetCharactersUseCase,
+    private val storageImpl: SharedPrefStorageImpl,
     @Assisted owner: SavedStateRegistryOwner,
 ) : AbstractSavedStateViewModelFactory(owner, null) {
     override fun <T : ViewModel?> create(
         key: String,
         modelClass: Class<T>,
         handle: SavedStateHandle
-    ): T = CharactersViewModel(getCharactersUseCase, handle) as T
+    ): T = CharactersViewModel(getCharactersUseCase, storageImpl, handle) as T
 }
 
 @AssistedFactory
 interface CharactersViewModelAssistedFactory {
-    fun create(owner: SavedStateRegistryOwner, storage: SharedPrefStorage) : CharactersViewModelFactory
+    fun create(owner: SavedStateRegistryOwner/*, storage: SharedPrefStorage*/): CharactersViewModelFactory
 }
 
 class CharactersViewModel @Inject constructor(
     private val getCharactersUseCase: GetCharactersUseCase,
+    private val storage: SharedPrefStorage,
     private val handle: SavedStateHandle
 ) : ViewModel() {
     var nextPage = handle.get<Int>("nextPage") ?: 1
@@ -48,6 +53,9 @@ class CharactersViewModel @Inject constructor(
             handle.set("nextPage", value)
         }
 
+    private var _isNight = handle.getLiveData("isNight", false)
+    val isNight: LiveData<Boolean> = _isNight
+
     private val composite = CompositeDisposable()
 
     private val fullList = mutableListOf<Character>()
@@ -55,7 +63,22 @@ class CharactersViewModel @Inject constructor(
 
     init {
         onRefresh()
-        Log.d(TAG, "nextpage: ${nextPage}")
+    }
+
+    fun saveMode(night: Boolean?) {
+//        val nm = isNight.value?.let { !it }
+        storage.setBoolean("isNightMode", night ?: false)
+//        delay(500)
+//        getMode()
+    }
+
+    fun getMode(): Boolean {
+        val night =  storage.getBoolean("isNightMode")
+        return night
+    }
+
+    fun setSSHMode(night: Boolean) {
+        _isNight.value = night
     }
 
     fun onRefresh(/*owner: LifecycleOwner*/) {
@@ -90,9 +113,15 @@ class CharactersViewModel @Inject constructor(
 
                 override fun onError(e: Throwable) {
                     when (e) {
-                        is IOException -> { Log.d(TAG, e.localizedMessage
-                                    ?: "Server not reached. Check internet connection") }
-                        else -> { Log.d(TAG, e.localizedMessage ?: "Unexpected error occurred") }
+                        is IOException -> {
+                            Log.d(
+                                TAG, e.localizedMessage
+                                    ?: "Server not reached. Check internet connection"
+                            )
+                        }
+                        else -> {
+                            Log.d(TAG, e.localizedMessage ?: "Unexpected error occurred")
+                        }
                     }
                 }
             })

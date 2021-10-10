@@ -15,4 +15,5 @@
     <string name="episode_episode">Episode: %1$s</string>
     <string name="character_image">Character image</string>
     <string name="character_image_description">Character image</string>
+    <string name="switch_mode">Switch mode</string>
 </resources>
