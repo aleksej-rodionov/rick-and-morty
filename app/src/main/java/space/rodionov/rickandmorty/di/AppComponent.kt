@@ -13,13 +13,15 @@ import space.rodionov.rickandmorty.presentation.location.locationlist.LocationsF
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [AppModule::class])
+@Component(modules = [AppModule::class, SharedPrefStorageModule::class])
 interface AppComponent {
 
     @Component.Factory
     interface Factory {
         fun create(@BindsInstance context: Context) : AppComponent
     }
+
+
 
     fun inject(activity: MainActivity)
     fun inject(fragment: CharactersFragment)

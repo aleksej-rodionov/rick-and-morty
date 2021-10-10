@@ -13,6 +13,7 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import space.rodionov.rickandmorty.R
+import space.rodionov.rickandmorty.data.storage.SharedPrefStorageImpl
 import space.rodionov.rickandmorty.databinding.FragmentCharactersBinding
 import space.rodionov.rickandmorty.domain.model.Character
 import space.rodionov.rickandmorty.presentation.MainActivity
@@ -21,6 +22,9 @@ import javax.inject.Inject
 private const val TAG = "LOGS"
 
 class CharactersFragment : Fragment(R.layout.fragment_characters) {
+
+    @Inject
+    lateinit var storage: SharedPrefStorageImpl
 
     //    private val viewModel: CharactersViewModel by viewModels()
 //    private val viewModel by lazy {

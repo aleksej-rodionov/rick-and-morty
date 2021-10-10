@@ -13,6 +13,8 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import space.rodionov.rickandmorty.data.remote.CharactersResponse
 import space.rodionov.rickandmorty.data.remote.dto.toCharacter
+import space.rodionov.rickandmorty.data.storage.SharedPrefStorage
+import space.rodionov.rickandmorty.data.storage.SharedPrefStorageImpl
 import space.rodionov.rickandmorty.domain.model.Character
 import space.rodionov.rickandmorty.domain.use_case.GetCharactersUseCase
 import java.io.IOException
@@ -22,7 +24,7 @@ private const val TAG = "LOGS"
 
 class CharactersViewModelFactory @AssistedInject constructor(
     private val getCharactersUseCase: GetCharactersUseCase,
-    @Assisted owner: SavedStateRegistryOwner
+    @Assisted owner: SavedStateRegistryOwner,
 ) : AbstractSavedStateViewModelFactory(owner, null) {
     override fun <T : ViewModel?> create(
         key: String,
@@ -33,7 +35,7 @@ class CharactersViewModelFactory @AssistedInject constructor(
 
 @AssistedFactory
 interface CharactersViewModelAssistedFactory {
-    fun create(owner: SavedStateRegistryOwner) : CharactersViewModelFactory
+    fun create(owner: SavedStateRegistryOwner, storage: SharedPrefStorage) : CharactersViewModelFactory
 }
 
 class CharactersViewModel @Inject constructor(
