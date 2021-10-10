@@ -99,6 +99,11 @@ class EpisodesViewModel @Inject constructor(
         nextPage = 1
         getNewPage()
     }
+
+    override fun onCleared() {
+        composite.dispose()
+        super.onCleared()
+    }
 }
 
 

@@ -1,5 +1,6 @@
 package space.rodionov.rickandmorty.presentation.character.characterdetail
 
+import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.AbstractSavedStateViewModelFactory
 import androidx.lifecycle.MutableLiveData
@@ -25,8 +26,9 @@ private const val TAG = "LOGS"
 
 class CharacterDetailViewModelFactory @AssistedInject constructor(
     private val getCharacterUseCase: GetCharacterUseCase,
-    @Assisted owner: SavedStateRegistryOwner
-) : AbstractSavedStateViewModelFactory(owner, null) {
+    @Assisted owner: SavedStateRegistryOwner,
+    @Assisted defaultArgs: Bundle? = null
+) : AbstractSavedStateViewModelFactory(owner, defaultArgs) {
     override fun <T : ViewModel?> create(
         key: String,
         modelClass: Class<T>,
@@ -36,13 +38,18 @@ class CharacterDetailViewModelFactory @AssistedInject constructor(
 
 @AssistedFactory
 interface CharacterDetailViewModelAssistedFactory {
-    fun create(owner: SavedStateRegistryOwner) : CharacterDetailViewModelFactory
+    fun create(owner: SavedStateRegistryOwner, defaultArgs: Bundle?) : CharacterDetailViewModelFactory
 }
 
 class CharacterDetailViewModel @Inject constructor(
     private val getCharacterUseCase: GetCharacterUseCase,
     private val handle: SavedStateHandle
 ) : ViewModel() {
+    var charId = handle.get<Int>("charId") ?: 0
+        set(value) {
+            field = value
+            handle.set("charId", value)
+        }
 
     private val composite = CompositeDisposable()
 
@@ -53,6 +60,7 @@ class CharacterDetailViewModel @Inject constructor(
         handle.get<Int>("charId")?.let {
             getCharacter(it)
         }
+        Log.d(TAG, "char id: ${charId}")
     }
 
     private fun getCharacter(charId: Int) {
@@ -85,6 +93,11 @@ class CharacterDetailViewModel @Inject constructor(
                     }
                 }
             })
+    }
+
+    override fun onCleared() {
+        composite.dispose()
+        super.onCleared()
     }
 }
 

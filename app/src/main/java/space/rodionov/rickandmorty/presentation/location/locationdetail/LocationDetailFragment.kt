@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import space.rodionov.rickandmorty.R
 import space.rodionov.rickandmorty.databinding.FragmentLocationDetailBinding
 import space.rodionov.rickandmorty.presentation.MainActivity
@@ -12,10 +13,12 @@ import javax.inject.Inject
 
 class LocationDetailFragment : Fragment(R.layout.fragment_location_detail) {
 
+    val args by navArgs<LocationDetailFragmentArgs>()
+
     //    private val viewModel : LocationDetailViewModel by viewModels()
     @Inject
     lateinit var assistedFactory: LocationDetailViewModelAssistedFactory
-    private val viewModel: LocationDetailViewModel by viewModels { assistedFactory.create(this) }
+    private val viewModel: LocationDetailViewModel by viewModels { assistedFactory.create(this, args.toBundle()) }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)

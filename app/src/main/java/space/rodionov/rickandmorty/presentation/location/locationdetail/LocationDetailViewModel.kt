@@ -1,5 +1,6 @@
 package space.rodionov.rickandmorty.presentation.location.locationdetail
 
+import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.AbstractSavedStateViewModelFactory
 import androidx.lifecycle.MutableLiveData
@@ -25,8 +26,9 @@ private const val TAG = "LOGS"
 
 class LocationDetailViewModelFactory @AssistedInject constructor(
     private val getLocationUseCase: GetLocationUseCase,
-    @Assisted owner: SavedStateRegistryOwner
-) : AbstractSavedStateViewModelFactory(owner, null) {
+    @Assisted owner: SavedStateRegistryOwner,
+    @Assisted defaultArgs: Bundle? = null
+) : AbstractSavedStateViewModelFactory(owner, defaultArgs) {
     override fun <T : ViewModel?> create(
         key: String,
         modelClass: Class<T>,
@@ -36,7 +38,7 @@ class LocationDetailViewModelFactory @AssistedInject constructor(
 
 @AssistedFactory
 interface LocationDetailViewModelAssistedFactory {
-    fun create (owner: SavedStateRegistryOwner) : LocationDetailViewModelFactory
+    fun create (owner: SavedStateRegistryOwner, defaultArgs: Bundle?) : LocationDetailViewModelFactory
 }
 
 class LocationDetailViewModel @Inject constructor(
@@ -85,6 +87,11 @@ class LocationDetailViewModel @Inject constructor(
                     }
                 }
             })
+    }
+
+    override fun onCleared() {
+        composite.dispose()
+        super.onCleared()
     }
 }
 

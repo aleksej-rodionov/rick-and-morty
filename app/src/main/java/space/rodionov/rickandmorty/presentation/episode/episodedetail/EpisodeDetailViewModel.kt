@@ -1,5 +1,6 @@
 package space.rodionov.rickandmorty.presentation.episode.episodedetail
 
+import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.AbstractSavedStateViewModelFactory
 import androidx.lifecycle.MutableLiveData
@@ -25,8 +26,9 @@ private const val TAG = "LOGS"
 
 class EpisodeDetailViewModelFactory @AssistedInject constructor(
     private val getEpisodeUseCase: GetEpisodeUseCase,
-    @Assisted owner: SavedStateRegistryOwner
-) : AbstractSavedStateViewModelFactory(owner, null) {
+    @Assisted owner: SavedStateRegistryOwner,
+    @Assisted defaultArgs: Bundle? = null
+) : AbstractSavedStateViewModelFactory(owner, defaultArgs) {
     override fun <T : ViewModel?> create(
         key: String,
         modelClass: Class<T>,
@@ -38,7 +40,7 @@ class EpisodeDetailViewModelFactory @AssistedInject constructor(
 
 @AssistedFactory
 interface EpisodeDetailViewModelAssistedFactory {
-    fun create(owner: SavedStateRegistryOwner) : EpisodeDetailViewModelFactory
+    fun create(owner: SavedStateRegistryOwner, defaultArgs: Bundle?) : EpisodeDetailViewModelFactory
 }
 
 class EpisodeDetailViewModel @Inject constructor(
@@ -86,6 +88,11 @@ class EpisodeDetailViewModel @Inject constructor(
                     }
                 }
             })
+    }
+
+    override fun onCleared() {
+        composite.dispose()
+        super.onCleared()
     }
 }
 

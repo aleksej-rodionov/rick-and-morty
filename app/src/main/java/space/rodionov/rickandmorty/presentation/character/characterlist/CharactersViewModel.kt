@@ -53,6 +53,7 @@ class CharactersViewModel @Inject constructor(
 
     init {
         onRefresh()
+        Log.d(TAG, "nextpage: ${nextPage}")
     }
 
     fun onRefresh(/*owner: LifecycleOwner*/) {
@@ -93,6 +94,11 @@ class CharactersViewModel @Inject constructor(
                     }
                 }
             })
+    }
+
+    override fun onCleared() {
+        composite.dispose()
+        super.onCleared()
     }
 }
 

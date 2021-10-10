@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import space.rodionov.rickandmorty.R
 import space.rodionov.rickandmorty.databinding.FragmentCharacterDetailBinding
@@ -13,10 +14,12 @@ import javax.inject.Inject
 
 class CharacterDetailFragment : Fragment(R.layout.fragment_character_detail) {
 
+    val args by navArgs<CharacterDetailFragmentArgs>()
+
 //    private val viewModel: CharacterDetailViewModel by viewModels()
     @Inject
     lateinit var assistedFactory: CharacterDetailViewModelAssistedFactory
-    private val viewModel : CharacterDetailViewModel by viewModels { assistedFactory.create(this) }
+    private val viewModel : CharacterDetailViewModel by viewModels { assistedFactory.create(this, args.toBundle()) }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -28,6 +31,10 @@ class CharacterDetailFragment : Fragment(R.layout.fragment_character_detail) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+//        val args by navArgs<CharacterDetailFragmentArgs>()
+//        viewModel.charId = args.charId
+
         _binding = FragmentCharacterDetailBinding.bind(view)
 
         binding.apply {
